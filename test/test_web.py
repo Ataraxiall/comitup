@@ -98,3 +98,59 @@ def test_webapp_blink(app, monkeypatch):
     response = app.test_client().get("/blink")
 
     assert response.status_code == 200
+
+
+def test_connectivity_android_generate_204(app):
+    """Test Android connectivity check endpoint /generate_204"""
+    response = app.test_client().get("/generate_204")
+    assert response.status_code == 204
+    assert response.get_data() == b""
+
+
+def test_connectivity_android_gen_204(app):
+    """Test Android connectivity check endpoint /gen_204"""
+    response = app.test_client().get("/gen_204")
+    assert response.status_code == 204
+    assert response.get_data() == b""
+
+
+def test_connectivity_ios(app):
+    """Test iOS/macOS connectivity check endpoint /hotspot-detect.html"""
+    response = app.test_client().get("/hotspot-detect.html")
+    assert response.status_code == 200
+    assert b"Success" in response.get_data()
+
+
+def test_connectivity_windows(app):
+    """Test Windows connectivity check endpoint /connecttest.txt"""
+    response = app.test_client().get("/connecttest.txt")
+    assert response.status_code == 200
+    assert response.get_data() == b"Microsoft Connect Test"
+
+
+def test_connectivity_windows_ncsi(app):
+    """Test Windows NCSI connectivity check endpoint /ncsi.txt"""
+    response = app.test_client().get("/ncsi.txt")
+    assert response.status_code == 200
+    assert response.get_data() == b"Microsoft NCSI"
+
+
+def test_connectivity_firefox(app):
+    """Test Firefox connectivity check endpoint /success.txt"""
+    response = app.test_client().get("/success.txt")
+    assert response.status_code == 200
+    assert response.get_data() == b"success\n"
+
+
+def test_connectivity_ubuntu(app):
+    """Test Ubuntu/GNOME connectivity check endpoint /connectivity-check"""
+    response = app.test_client().get("/connectivity-check")
+    assert response.status_code == 204
+    assert response.get_data() == b""
+
+
+def test_connectivity_ubuntu_html(app):
+    """Test Ubuntu/GNOME connectivity check /connectivity-check.html"""
+    response = app.test_client().get("/connectivity-check.html")
+    assert response.status_code == 204
+    assert response.get_data() == b""

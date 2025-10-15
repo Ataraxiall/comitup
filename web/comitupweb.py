@@ -143,6 +143,45 @@ def create_app(log):
     def send_css(path):
         return send_from_directory(TEMPLATE_PATH + "/css", path)
 
+    # Connectivity check endpoints for various platforms
+    # Android
+    @app.route("/generate_204")
+    def android_connectivity():
+        return "", 204
+
+    # Alternative Android endpoint
+    @app.route("/gen_204")
+    def android_connectivity_alt():
+        return "", 204
+
+    # iOS/macOS
+    @app.route("/hotspot-detect.html")
+    def ios_connectivity():
+        html = "<HTML><HEAD><TITLE>Success</TITLE></HEAD>"
+        html += "<BODY>Success</BODY></HTML>"
+        return html, 200
+
+    # Windows
+    @app.route("/connecttest.txt")
+    def windows_connectivity():
+        return "Microsoft Connect Test", 200
+
+    # Alternative Windows endpoint
+    @app.route("/ncsi.txt")
+    def windows_connectivity_alt():
+        return "Microsoft NCSI", 200
+
+    # Firefox
+    @app.route("/success.txt")
+    def firefox_connectivity():
+        return "success\n", 200
+
+    # Ubuntu/GNOME
+    @app.route("/connectivity-check")
+    @app.route("/connectivity-check.html")
+    def ubuntu_connectivity():
+        return "", 204
+
     @app.route("/<path:path>")
     def catch_all(path):
         return redirect("http://10.41.0.1/", code=302)
