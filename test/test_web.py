@@ -98,3 +98,74 @@ def test_webapp_blink(app, monkeypatch):
     response = app.test_client().get("/blink")
 
     assert response.status_code == 200
+
+
+# Tests for connectivity check endpoints
+def test_connectivity_android_generate_204(app):
+    """Test Android connectivity check endpoint /generate_204"""
+    response = app.test_client().get("/generate_204")
+    assert response.status_code == 204
+    assert response.data == b""
+
+
+def test_connectivity_android_gen_204(app):
+    """Test Android connectivity check endpoint /gen_204"""
+    response = app.test_client().get("/gen_204")
+    assert response.status_code == 204
+    assert response.data == b""
+
+
+def test_connectivity_ios_success_html(app):
+    """Test iOS connectivity check endpoint /library/test/success.html"""
+    response = app.test_client().get("/library/test/success.html")
+    assert response.status_code == 200
+    assert b"Success" in response.data
+
+
+def test_connectivity_ios_hotspot_detect(app):
+    """Test iOS connectivity check endpoint /hotspot-detect.html"""
+    response = app.test_client().get("/hotspot-detect.html")
+    assert response.status_code == 200
+    assert b"Success" in response.data
+
+
+def test_connectivity_apple_success_txt(app):
+    """Test Apple connectivity check endpoint /success.txt"""
+    response = app.test_client().get("/success.txt")
+    assert response.status_code == 200
+    assert response.data == b"Success"
+
+
+def test_connectivity_windows_ncsi(app):
+    """Test Windows connectivity check endpoint /ncsi.txt"""
+    response = app.test_client().get("/ncsi.txt")
+    assert response.status_code == 200
+    assert b"Microsoft NCSI" in response.data
+
+
+def test_connectivity_windows_connecttest(app):
+    """Test Windows connectivity check endpoint /connecttest.txt"""
+    response = app.test_client().get("/connecttest.txt")
+    assert response.status_code == 200
+    assert b"Microsoft Connect Test" in response.data
+
+
+def test_connectivity_firefox_canonical(app):
+    """Test Firefox connectivity check endpoint /canonical.html"""
+    response = app.test_client().get("/canonical.html")
+    assert response.status_code == 200
+    assert b"success.txt" in response.data
+
+
+def test_connectivity_samsung_generate204(app):
+    """Test Samsung connectivity check endpoint /generate204"""
+    response = app.test_client().get("/generate204")
+    assert response.status_code == 204
+    assert response.data == b""
+
+
+def test_connectivity_generic_check(app):
+    """Test generic connectivity check endpoint /check_network_status.txt"""
+    response = app.test_client().get("/check_network_status.txt")
+    assert response.status_code == 200
+    assert response.data == b"OK"

@@ -143,6 +143,74 @@ def create_app(log):
     def send_css(path):
         return send_from_directory(TEMPLATE_PATH + "/css", path)
 
+    # Connectivity check endpoints for fake internet mode
+    # Android connectivity checks - return HTTP 204
+    @app.route("/generate_204")
+    def generate_204():
+        log.info("Android connectivity check: /generate_204")
+        return "", 204
+
+    @app.route("/gen_204")
+    def gen_204():
+        log.info("Android connectivity check: /gen_204")
+        return "", 204
+
+    # iOS connectivity checks - return HTTP 200 with specific content
+    @app.route("/library/test/success.html")
+    def ios_success_html():
+        log.info("iOS connectivity check: /library/test/success.html")
+        html = "<HTML><HEAD><TITLE>Success</TITLE></HEAD>"
+        html += "<BODY>Success</BODY></HTML>"
+        return html, 200
+
+    @app.route("/hotspot-detect.html")
+    def ios_hotspot_detect():
+        log.info("iOS connectivity check: /hotspot-detect.html")
+        html = "<HTML><HEAD><TITLE>Success</TITLE></HEAD>"
+        html += "<BODY>Success</BODY></HTML>"
+        return html, 200
+
+    @app.route("/success.txt")
+    def apple_success_txt():
+        log.info("Apple connectivity check: /success.txt")
+        return "Success", 200
+
+    # Windows connectivity checks
+    @app.route("/ncsi.txt")
+    def windows_ncsi():
+        log.info("Windows connectivity check: /ncsi.txt")
+        return "Microsoft NCSI", 200
+
+    @app.route("/connecttest.txt")
+    def windows_connecttest():
+        log.info("Windows connectivity check: /connecttest.txt")
+        return "Microsoft Connect Test", 200
+
+    # Firefox connectivity check
+    @app.route("/canonical.html")
+    def firefox_canonical():
+        log.info("Firefox connectivity check: /canonical.html")
+        meta = '<meta http-equiv="refresh" content="0;url=success.txt"/>'
+        return meta, 200
+
+    # Samsung/Android manufacturer-specific checks
+    @app.route("/generate204")
+    def generate204_no_underscore():
+        log.info("Samsung connectivity check: /generate204")
+        return "", 204
+
+    # Xiaomi connectivity checks
+    @app.route("/generate_204_xiaomi")
+    def xiaomi_generate_204():
+        log.info("Xiaomi connectivity check: /generate_204_xiaomi")
+        return "", 204
+
+    # Generic catch-all for other connectivity checks
+    @app.route("/check_network_status.txt")
+    def check_network_status():
+        log.info("Generic connectivity check: /check_network_status.txt")
+        return "OK", 200
+
     @app.route("/<path:path>")
     def catch_all(path):
         return redirect("http://10.41.0.1/", code=302)
