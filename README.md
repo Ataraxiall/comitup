@@ -58,6 +58,15 @@ __comitup__ requires NetworkManager and systemd.
 
 See the [Home Page](https://davesteele.github.io/comitup/) for installation information.
 
+Fake Internet Mode
+---------
+
+For IoT devices without internet access, __comitup__ can respond to connectivity checks
+from mobile devices (Android, iOS, Windows, etc.) to prevent automatic disconnection.
+This allows devices to remain connected to the AP even when there's no internet connection.
+
+See [doc/FAKE_INTERNET.md](doc/FAKE_INTERNET.md) for detailed information about this feature.
+
 Man pages
 ---------
 
