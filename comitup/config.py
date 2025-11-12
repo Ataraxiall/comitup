@@ -110,6 +110,7 @@ def load_data():
                     'web_service': '',
                     'service_name': 'comitup',
                     'external_callback': '/usr/local/bin/comitup-callback',
+                    'enable_fake_internet': 'false',
                 },
              )
 
